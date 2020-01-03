@@ -1,0 +1,13 @@
+﻿1>------ Build started: Project: failSafeC, Configuration: Debug Win32 ------
+1>Moc'ing qOscilloscope.h...
+1>main.cpp
+1>qAgilentDSO1014A.cpp
+1>qFailSafeWin.cpp
+1>qFailSafeWizard.cpp
+1>qOscilloscope.cpp
+1>moc_qFailSafeWizard.cpp
+1>moc_qAgilentDSO1014A.cpp
+1>moc_qFailSafeWin.cpp
+1>moc_qOscilloscope.cpp
+1>failSafeC.vcxproj -> C:\Users\unm\Documents\GitHub\caCode\src\failSafeC\Win32\Debug\failSafeC.exe
+========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========

@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/failSafeC">
+        <file>Resources/start.png</file>
+        <file>Resources/stop.png</file>
+        <file>Resources/calibration.png</file>
+        <file>Resources/ISI.png</file>
+        <file>Resources/banner.png</file>
+        <file>Resources/banner1.png</file>
+        <file>Resources/unmLogo.png</file>
+        <file>Resources/isptaThres.png</file>
+        <file>Resources/Vthres.png</file>
+    </qresource>
+</RCC>
