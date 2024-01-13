@@ -11,3 +11,10 @@
 - Save the data and logs of abnormal events
 
 ## Usage
+- Main window
+
+<img src='failSafeC/Images/main%20GUI.png' width='800'>
+
+- Stop running when detecting a high voltage. The threshold can be customized.
+
+<img src='failSafeC/Images/main%20GUI%20wiht%20abnormal%20voltage.png' width='800'>
