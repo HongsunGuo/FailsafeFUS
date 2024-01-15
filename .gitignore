@@ -1,3 +1,6 @@
 
 *.obj
 *.ipch
+/StimuliScheduler/x64/Debug
+/StimuliScheduler/StimuliScheduler/x64/Debug
+/StimuliScheduler/.vs/StimuliScheduler
