@@ -20,6 +20,7 @@ public:
 
     FUSStimulus(FUSParameter para = FUSParameter()) :
         m_fusParameter(para) {}
+
     std::string toString() override {
         std::string res = "Ultrasound stimulus: ";
         if (m_fusParameter.mode == FUSParameter::Pulsed) {

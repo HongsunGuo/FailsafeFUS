@@ -1,11 +1,6 @@
 #include <QMessageBox>
-#include "StimuliScheduler.h"
-#include "FlashingLEDStimulus.h"
-#include "SpontStimulus.h"
-#include "FUSStimulus.h"
-#include "SoundStimulus.h"
-#include "VibrationStimulus.h"
 #include "ui_SelectStimulusDialog.h"
+#include "StimuliScheduler.h"
 
 #define CHECK_ITEM_SELECTED do { \
     int index = ui.blockListWidget->currentRow(); \
@@ -23,6 +18,9 @@ StimuliScheduler::StimuliScheduler(QWidget *parent)
     ui.setupUi(this);
     connect(ui.addPushButton, SIGNAL(clicked()), this, SLOT(onClickAddPushbutton()));
     connect(ui.deletePushButton, SIGNAL(clicked()), this, SLOT(onClickDeletePushbutton()));
+    connect(ui.dupPushButton, SIGNAL(clicked()), this, SLOT(onClickDupPushbutton()));
+    connect(ui.moveUpPushButton, SIGNAL(clicked()), this, SLOT(onClickMoveUpPushbutton()));
+    connect(ui.moveDownPushButton, SIGNAL(clicked()), this, SLOT(onClickMoveDownPushbutton()));
 }
 
 StimuliScheduler::~StimuliScheduler()
