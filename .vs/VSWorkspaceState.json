@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\StimuliScheduler",
+    "\\StimuliScheduler\\StimuliScheduler"
   ],
-  "SelectedNode": "\\C:\\Users\\hsguo\\Source\\Repos\\Qt-projects",
+  "SelectedNode": "\\StimuliScheduler\\StimuliScheduler\\StimuliScheduler.cpp",
   "PreviewInSolutionExplorer": false
 }

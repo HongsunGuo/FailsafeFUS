@@ -11,6 +11,8 @@
 #include <vector>
 #include <memory>
 #include <algorithm>
+#include <QTimer>
+#include <QListWidgetItem>
 
 class StimuliScheduler : public QDialog
 {
@@ -20,8 +22,26 @@ public:
     StimuliScheduler(QWidget *parent = nullptr);
     ~StimuliScheduler();
 private:
+    class Setting {
+    public:
+        Setting(){}
+        void reset() {
+            curBlockID = 0;
+            curStimID = 0;
+            order.clear();
+        }
+        int nBlocks = 5;
+        int ISIsec = 20;
+        int curBlockID = 0;
+        int curStimID = 0;
+        bool random = true;
+        std::vector<std::vector<int>> order = {};
+    };
+
+    Setting m_setting;
     Ui::StimuliSchedulerClass ui;
     std::vector<std::shared_ptr<Stimulus>> m_stimuli;
+    QTimer m_timer;
     void addStimulus(std::shared_ptr<Stimulus> newStimulus) {
         m_stimuli.push_back(newStimulus);
     }
@@ -67,6 +87,7 @@ private:
         std::swap(m_stimuli[i], m_stimuli[i + 1]);
     }
     void updateBlockEditor();
+    void updateCurBlockView(const std::vector<int>& curBlock, int curStimID);
 
 private slots:
     void onClickAddPushbutton();
@@ -74,4 +95,8 @@ private slots:
     void onClickDupPushbutton();
     void onClickMoveUpPushbutton();
     void onClickMoveDownPushbutton();
+    void onClickRunPushbutton();
+    void updateSetting();
+    void timeoutCallback();
+    void onItemDoubleClicked(QListWidgetItem* item);
 };

@@ -61,6 +61,9 @@
     <ClCompile Include="SpontStimulus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FUSSettingDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stimulus.h">
@@ -89,5 +92,13 @@
     <QtUic Include="SelectStimulusDialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="FUSSettingDialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="FUSSettingDialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>

@@ -40,7 +40,6 @@ public:
             res += std::to_string(m_fusParameter.dur_ms);
         }
         return res; }
-private:
     FUSParameter m_fusParameter;
 };
 

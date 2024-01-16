@@ -91,12 +91,14 @@
   <ItemGroup>
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="FlashingLEDStimulus.cpp" />
+    <ClCompile Include="FUSSettingDialog.cpp" />
     <ClCompile Include="FUSStimulus.cpp" />
     <ClCompile Include="SoundStimulus.cpp" />
     <ClCompile Include="SpontStimulus.cpp" />
     <ClCompile Include="Stimulus.cpp" />
     <ClCompile Include="VibrationStimulus.cpp" />
     <QtRcc Include="StimuliScheduler.qrc" />
+    <QtUic Include="FUSSettingDialog.ui" />
     <QtUic Include="SelectStimulusDialog.ui" />
     <QtUic Include="StimuliScheduler.ui" />
     <QtMoc Include="StimuliScheduler.h" />
@@ -106,6 +108,7 @@
   <ItemGroup>
     <ClInclude Include="Device.h" />
     <ClInclude Include="FlashingLEDStimulus.h" />
+    <QtMoc Include="FUSSettingDialog.h" />
     <ClInclude Include="FUSStimulus.h" />
     <ClInclude Include="SoundStimulus.h" />
     <ClInclude Include="SpontStimulus.h" />
