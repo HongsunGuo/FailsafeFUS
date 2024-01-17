@@ -20,6 +20,7 @@ StimuliScheduler::StimuliScheduler(QWidget *parent)
     : QDialog(parent)
 {
     ui.setupUi(this);
+    ui.progressBar->setValue(0);
     ui.ISILineEdit->setText(QString::number(m_setting.ISIsec));
     ui.nBlockLineEdit->setText(QString::number(m_setting.nBlocks));
     ui.randomCheckBox->setChecked(m_setting.random);
@@ -49,6 +50,7 @@ void StimuliScheduler::onClickAddPushbutton()
     QDialog dialog;
     Ui::SelectStimulusDialog ui_dialog;
     ui_dialog.setupUi(&dialog);
+    dialog.setWindowTitle("Select stimulus type:");
     int result = dialog.exec();
     if (result == QDialog::Rejected)
         return;
@@ -137,10 +139,13 @@ void StimuliScheduler::updateSetting() {
 void StimuliScheduler::timeoutCallback() {
     updateCurBlockView(m_setting.order[m_setting.curBlockID], m_setting.curStimID);
     ui.progressBar->setValue(m_setting.curBlockID * m_stimuli.size() + m_setting.curStimID + 1);
+    setStatus("Current block id = " + QString::number(m_setting.curBlockID + 1)
+        + ", current stimulus id = " + QString::number(m_setting.curStimID + 1));
     if (++m_setting.curStimID == m_stimuli.size()) {
         if (++m_setting.curBlockID == m_setting.nBlocks) {
             QMessageBox::information(this, "Operation Successful", "The session was completed successfully!");
             m_timer.stop();
+            setStatus("Done!");
         }
         else {
             m_setting.curStimID = 0;

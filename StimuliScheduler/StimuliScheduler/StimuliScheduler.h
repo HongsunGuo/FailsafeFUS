@@ -88,6 +88,9 @@ private:
     }
     void updateBlockEditor();
     void updateCurBlockView(const std::vector<int>& curBlock, int curStimID);
+    void setStatus(const QString& status) {
+        ui.statusLabel->setText(status);
+    }
 
 private slots:
     void onClickAddPushbutton();
