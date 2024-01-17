@@ -4,6 +4,7 @@
 #include "ui_SelectStimulusDialog.h"
 #include "StimuliScheduler.h"
 #include "FUSSettingDialog.h"
+#include "SoundSettingDialog.h"
 
 #define CHECK_ITEM_SELECTED do { \
     int index = ui.blockListWidget->currentRow(); \
@@ -120,6 +121,8 @@ void StimuliScheduler::onClickRunPushbutton() {
             shuffle(originalOrder.begin(), originalOrder.end(), rng);
         m_setting.order.push_back(originalOrder);
     }
+    ui.progressBar->setRange(0, m_setting.nBlocks * m_stimuli.size());
+    ui.progressBar->setValue(0);
     m_timer.setInterval(m_setting.ISIsec * 1000);
     m_timer.start();
  }
@@ -133,8 +136,10 @@ void StimuliScheduler::updateSetting() {
 
 void StimuliScheduler::timeoutCallback() {
     updateCurBlockView(m_setting.order[m_setting.curBlockID], m_setting.curStimID);
+    ui.progressBar->setValue(m_setting.curBlockID * m_stimuli.size() + m_setting.curStimID + 1);
     if (++m_setting.curStimID == m_stimuli.size()) {
         if (++m_setting.curBlockID == m_setting.nBlocks) {
+            QMessageBox::information(this, "Operation Successful", "The session was completed successfully!");
             m_timer.stop();
         }
         else {
@@ -166,5 +171,13 @@ void StimuliScheduler::onItemDoubleClicked(QListWidgetItem* item) {
         FUSSettingDialog fUSDialog(fUSPtr);
         if (QDialog::Accepted == fUSDialog.exec())
             updateBlockEditor();
+    }else if (typeInfo == typeid(SoundStimulus)) {
+        shared_ptr<SoundStimulus> soundPtr = dynamic_pointer_cast<SoundStimulus>(stimPtr);
+        SoundSettingDialog soundDialog(soundPtr);
+        if (QDialog::Accepted == soundDialog.exec())
+            updateBlockEditor();
+    }
+    else {
+        ;
     }
 }
