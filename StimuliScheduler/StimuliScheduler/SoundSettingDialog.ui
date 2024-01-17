@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>FUSSettingDialogClass</class>
- <widget class="QDialog" name="FUSSettingDialogClass">
+ <class>SoundSettingDialogClass</class>
+ <widget class="QDialog" name="SoundSettingDialogClass">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>268</width>
-    <height>214</height>
+    <width>187</width>
+    <height>130</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Change ultrasound parameters</string>
+   <string>Change sound setting</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
-      <widget class="QLabel" name="label_5">
+      <widget class="QLabel" name="label">
        <property name="text">
         <string>Mode:</string>
        </property>
@@ -27,65 +27,35 @@
       <widget class="QComboBox" name="modeComboBox">
        <item>
         <property name="text">
-         <string>Pulsed</string>
+         <string>BN</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Continuous</string>
+         <string>Tone</string>
         </property>
        </item>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Center Freq (MHz):</string>
+        <string>Duration (ms)</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="cFreqLineEdit"/>
+      <widget class="QLineEdit" name="durLineEdit"/>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>Pressure (kPa):</string>
+        <string>Freq (kHz)</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="pressureLineEdit"/>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Pulse Duration (ms):</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="PDLineEdit"/>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Number of Pulses:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLineEdit" name="nPulseLineEdit"/>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>PRF (kHz):</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QLineEdit" name="PRFLineEdit"/>
+      <widget class="QLineEdit" name="freqLineEdit"/>
      </item>
     </layout>
    </item>

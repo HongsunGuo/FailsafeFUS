@@ -93,6 +93,7 @@
     <ClCompile Include="FlashingLEDStimulus.cpp" />
     <ClCompile Include="FUSSettingDialog.cpp" />
     <ClCompile Include="FUSStimulus.cpp" />
+    <ClCompile Include="SoundSettingDialog.cpp" />
     <ClCompile Include="SoundStimulus.cpp" />
     <ClCompile Include="SpontStimulus.cpp" />
     <ClCompile Include="Stimulus.cpp" />
@@ -100,6 +101,7 @@
     <QtRcc Include="StimuliScheduler.qrc" />
     <QtUic Include="FUSSettingDialog.ui" />
     <QtUic Include="SelectStimulusDialog.ui" />
+    <QtUic Include="SoundSettingDialog.ui" />
     <QtUic Include="StimuliScheduler.ui" />
     <QtMoc Include="StimuliScheduler.h" />
     <ClCompile Include="StimuliScheduler.cpp" />
@@ -110,6 +112,7 @@
     <ClInclude Include="FlashingLEDStimulus.h" />
     <QtMoc Include="FUSSettingDialog.h" />
     <ClInclude Include="FUSStimulus.h" />
+    <QtMoc Include="SoundSettingDialog.h" />
     <ClInclude Include="SoundStimulus.h" />
     <ClInclude Include="SpontStimulus.h" />
     <ClInclude Include="Stimulus.h" />

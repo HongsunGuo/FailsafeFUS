@@ -18,7 +18,7 @@ public:
 
     std::string toString() override {
         std::string res = "Audible sound stimulus: ";
-        if (m_soundParameter.mode = SoundParameter::BN) {
+        if (m_soundParameter.mode == SoundParameter::BN) {
             res += "mode = BN";
             res += ", Duration (ms) = ";
             res += std::to_string(m_soundParameter.dur_ms);
@@ -33,7 +33,5 @@ public:
         return res;
     }
 
-private:
     SoundParameter m_soundParameter;
 };
-
