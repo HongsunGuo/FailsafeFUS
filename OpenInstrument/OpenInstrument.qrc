@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/OpenInstrument">
+        <file>icons/open folder.png</file>
+        <file>icons/run.png</file>
+        <file>icons/save.png</file>
+        <file>icons/add.png</file>
+        <file>icons/delete.png</file>
+        <file>icons/duplicate.png</file>
+        <file>icons/move down.png</file>
+        <file>icons/move up.png</file>
+    </qresource>
+</RCC>
