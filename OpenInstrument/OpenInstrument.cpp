@@ -12,9 +12,11 @@ OpenInstrument::OpenInstrument(QWidget* parent)
 {
     m_taskListPtr = make_shared<vector<Task>>();
     m_seqListPtr = make_shared<vector<SequenceListItem>>();
-
+    //load from ini file
+    FileMgr::readTasksFromFile(*m_taskListPtr, m_taskFileName);
+    FileMgr::readSeqListFromFile(*m_seqListPtr, m_seqFileName);
+    //
     ui.setupUi(this);
-
 
     chart = new QChart();
     chart->setTitle("Sample Chart");
@@ -82,6 +84,7 @@ void OpenInstrument::configureToolbar() {
     connect(ui.actionEdit_Tasks, SIGNAL(triggered()), this, SLOT(onTaskEditTriggered()));
     connect(ui.actionEdit_Sequence, SIGNAL(triggered()), this, SLOT(onSequenceEditTriggered()));
     connect(ui.actionAnalyze_Data, SIGNAL(triggered()), this, SLOT(onAnalyzeDataTriggered()));
+    connect(ui.actionSave, SIGNAL(triggered()), this, SLOT(onSaveTriggered()));
 }
 
 void OpenInstrument::onTaskEditTriggered() {
@@ -92,6 +95,18 @@ void OpenInstrument::onTaskEditTriggered() {
 void OpenInstrument::onSequenceEditTriggered() {
     SequenceEditor seqEditorDialog(m_seqListPtr, m_taskListPtr, m_curSeqID);
     seqEditorDialog.exec();
+}
+
+void OpenInstrument::onSaveTriggered() {
+    if (!FileMgr::saveTasksToFile(*m_taskListPtr, m_taskFileName)) {
+        QMessageBox::warning(nullptr, "No save", "Could not save to file task.ini");
+        return;
+    }
+
+    if (!FileMgr::saveSeqListToFile(*m_seqListPtr, m_seqFileName)) {
+        QMessageBox::warning(nullptr, "No save", "Could not save to file seq.ini");
+        return;
+    }
 }
 
 void OpenInstrument::onAnalyzeDataTriggered() {

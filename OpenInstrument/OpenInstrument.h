@@ -20,6 +20,8 @@ public:
     ~OpenInstrument();
 
 private:
+    const std::string m_taskFileName = "task.ini";
+    const std::string m_seqFileName = "seq.ini";
     Ui::OpenInstrumentClass ui;
     QVBoxLayout* vLayout;
     QChartView* mainChartView;
@@ -44,4 +46,5 @@ private slots:
     void onTaskEditTriggered();
     void onSequenceEditTriggered();
     void onAnalyzeDataTriggered();
+    void onSaveTriggered();
 };
