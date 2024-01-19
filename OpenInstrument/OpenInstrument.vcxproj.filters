@@ -76,5 +76,11 @@
     <QtUic Include="SequenceEditor.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="NewSeqListDialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="AddTaskToSequenceDialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
 </Project>

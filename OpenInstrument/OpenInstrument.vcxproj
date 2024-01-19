@@ -94,6 +94,8 @@
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="TaskEditor.cpp" />
     <QtRcc Include="OpenInstrument.qrc" />
+    <QtUic Include="AddTaskToSequenceDialog.ui" />
+    <QtUic Include="NewSeqListDialog.ui" />
     <QtUic Include="OpenInstrument.ui" />
     <QtMoc Include="OpenInstrument.h" />
     <ClCompile Include="OpenInstrument.cpp" />

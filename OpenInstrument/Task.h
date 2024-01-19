@@ -6,7 +6,9 @@
 class Task
 {
 public:
-	Task() {}
+	Task(const std::string &sname = "", const std::string& port = "",
+		const std::string &des = "", const std::string& co = "") :
+		shortName(sname), serialPortName(port), description(des), command(co){}
 	std::string shortName; //unique
 	std::string serialPortName;
 	std::string description;
@@ -15,16 +17,17 @@ public:
 
 class SequenceItem {
 public:
-	SequenceItem(std::shared_ptr<Task> ptr, int delay) :
-		taskPtr(ptr), delaySec(delay) {}
-	std::shared_ptr<Task> taskPtr;
+	SequenceItem(const std::string &shortname, int delay = 0) :
+		taskShortName(shortname), delaySec(delay) {}
+	//std::shared_ptr<Task> taskPtr;
+	std::string taskShortName = "";
 	int delaySec = 0;
 };
 
 
 class SequenceListItem {
 public:
-	SequenceListItem() {};
-	std::shared_ptr<std::vector<SequenceItem>> sequenceListPtr;
+	SequenceListItem(const std::string &name): shortName(name) {};
+	std::vector<SequenceItem> sequenceList;
 	std::string shortName; //unique
 };

@@ -3,15 +3,21 @@
 #include "TaskEditor.h"
 #include "SequenceEditor.h"
 #include "FileMgr.h"
+#include "Task.h"
 
 using namespace std;
 
 OpenInstrument::OpenInstrument(QWidget* parent)
     : QMainWindow(parent)
 {
+    m_taskListPtr = make_shared<vector<Task>>();
+    m_seqListPtr = make_shared<vector<SequenceListItem>>();
+
     ui.setupUi(this);
+
+
     chart = new QChart();
-    //chart->setTitle("Sample Chart");
+    chart->setTitle("Sample Chart");
     axisX = new QValueAxis();
     axisY = new QValueAxis();
 
@@ -26,9 +32,13 @@ OpenInstrument::OpenInstrument(QWidget* parent)
     chart->addAxis(axisX, Qt::AlignBottom);
     chart->addAxis(axisY, Qt::AlignLeft);
     chart->setTheme(QChart::ChartThemeDark);
-    chart->legend()->show();
+    chart->legend()->setVisible(true);
+    chart->legend()->setAlignment(Qt::AlignBottom);
+    chart->legend()->setBackgroundVisible(false);
+
     mainChartView = new QChartView(chart);
     mainChartView->setRenderHint(QPainter::Antialiasing);
+    
     //
     vLayout = new QVBoxLayout(ui.centralWidget);
     vLayout->addWidget(mainChartView);
@@ -75,12 +85,12 @@ void OpenInstrument::configureToolbar() {
 }
 
 void OpenInstrument::onTaskEditTriggered() {
-    TaskEditor taskEditorDialog;
+    TaskEditor taskEditorDialog(m_taskListPtr);
     taskEditorDialog.exec();
 }
 
 void OpenInstrument::onSequenceEditTriggered() {
-    SequenceEditor seqEditorDialog;
+    SequenceEditor seqEditorDialog(m_seqListPtr, m_taskListPtr, m_curSeqID);
     seqEditorDialog.exec();
 }
 
@@ -97,4 +107,6 @@ void OpenInstrument::onAnalyzeDataTriggered() {
     chart->addSeries(m_rawlinePtr.get());
     m_rawlinePtr->attachAxis(axisX);
     m_rawlinePtr->attachAxis(axisY);
+    chart->setTitle("Sample xxxxx");
+
 }

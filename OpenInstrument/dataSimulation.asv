@@ -48,8 +48,8 @@ y_denoise = movmean(y_monotonic_baseline, 20);
 
 yy = y_denoise;
 x_tang = [];
-nStep = 5;
-for k=2:length(yy)
+nStep = 10;
+for k=2:size(yy)
     slope = yy(k) - yy(k-1);
     lo = k - nStep;
     if lo < 1
@@ -57,22 +57,8 @@ for k=2:length(yy)
     end
     
     up = k+ nStep;
-    if up > length(yy)
-        up = length(yy);
-    end
-    
-    isT = 1;
-    while(lo < up)
-        if(yy(lo) < slope * (lo - k) + yy(k) )
-            isT = 0;
-            break;
-        end
-        lo = lo + 1;
-    end
-    if isT == 1
-        x_tang = [x_tang; k];
-        hold on;
-        xline(k./10);
+    if up > size(yy)
+        up = size(uu)
     end
     
 end
