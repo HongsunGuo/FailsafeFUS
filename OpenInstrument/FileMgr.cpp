@@ -5,6 +5,7 @@
 
 using namespace std;
 
+/*
 bool FileMgr::readDataFile(const string& filename,
     vector<pair<double, double>> &data)
 {
@@ -24,6 +25,26 @@ bool FileMgr::readDataFile(const string& filename,
 
     file.close();
 	return true;
+}
+*/
+
+bool FileMgr::readDataFile(const string& filename, pair<vector<double>, vector<double>>& data) {
+    ifstream file(filename);
+    // Check if the file was opened successfully
+    if (!file.is_open()) {
+        std::cerr << "Error opening file." << std::endl;
+        return false;
+    }
+
+    double x, y;
+    // Read the file line by line
+    while (file >> x >> y) {
+        data.first.push_back(x);
+        data.second.push_back(y);
+    }
+
+    file.close();
+    return true;
 }
 
 //Will change the file to JOSN format because iofstream treat spaces as delimiters. If a string has delimiters,

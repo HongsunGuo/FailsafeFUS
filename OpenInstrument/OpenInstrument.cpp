@@ -4,6 +4,8 @@
 #include "SequenceEditor.h"
 #include "FileMgr.h"
 #include "Task.h"
+#include "RunSeqDialog.h"
+#include "DataProc.h"
 
 using namespace std;
 
@@ -30,9 +32,9 @@ OpenInstrument::OpenInstrument(QWidget* parent)
     gridPen.setStyle(Qt::DashLine);
     axisX->setGridLinePen(gridPen);
     axisY->setGridLinePen(gridPen);
-
     chart->addAxis(axisX, Qt::AlignBottom);
     chart->addAxis(axisY, Qt::AlignLeft);
+
     chart->setTheme(QChart::ChartThemeDark);
     chart->legend()->setVisible(true);
     chart->legend()->setAlignment(Qt::AlignBottom);
@@ -55,20 +57,6 @@ OpenInstrument::~OpenInstrument()
 
 void OpenInstrument::configureLines()
 {
-    QPen penRaw, penProcessed;
-    penRaw.setWidth(1); // Set the width of the line
-    penRaw.setColor(Qt::white); // Set the color of the line
-    penProcessed.setWidth(1);
-    penProcessed.setColor(Qt::yellow);
-    //
-    m_rawlinePtr = make_shared<QLineSeries>();
-    m_processedlinePtr = make_shared<QLineSeries>();
-    //
-    m_rawlinePtr->setPen(penRaw);
-    m_rawlinePtr->setName("Raw data");
-
-    m_processedlinePtr->setPen(penProcessed);
-    m_processedlinePtr->setName("Processed data");
 }
 
 void OpenInstrument::configureToolbar() {
@@ -85,6 +73,7 @@ void OpenInstrument::configureToolbar() {
     connect(ui.actionEdit_Sequence, SIGNAL(triggered()), this, SLOT(onSequenceEditTriggered()));
     connect(ui.actionAnalyze_Data, SIGNAL(triggered()), this, SLOT(onAnalyzeDataTriggered()));
     connect(ui.actionSave, SIGNAL(triggered()), this, SLOT(onSaveTriggered()));
+    connect(ui.actionRun, SIGNAL(triggered()), this, SLOT(onRunTriggered()));
 }
 
 void OpenInstrument::onTaskEditTriggered() {
@@ -110,18 +99,43 @@ void OpenInstrument::onSaveTriggered() {
 }
 
 void OpenInstrument::onAnalyzeDataTriggered() {
-
     if (!FileMgr::readDataFile("./xy_data.txt", m_curData))
         return;
+    addNewCurve(m_curData, "Raw data", Qt::white);
+    pair<vector<double>, vector<double>> filterData = DataProc::movemean(m_curData, 20);
+    addNewCurve(filterData, "FIltered data", QColor(255, 100, 100), 3);
 
-    m_rawlinePtr->clear();
-    for (auto& pair : m_curData) {
-        m_rawlinePtr->append(pair.first, pair.second);
+    vector<int> peakInds = DataProc::findMaxPeaks(filterData.second, 60);
+    for (int i = 0; i < peakInds.size(); i++) {
+        vector<double> xx = { filterData.first[peakInds[i]], filterData.first[peakInds[i]] };
+        vector<double> yy = { -0.4, 10.6 };
+        addNewCurve(make_pair(xx, yy),
+            "Peak " + QString::number(i + 1), QColor(255, 50, 50), 2, Qt::DashDotLine);
+    }
+}
+
+void OpenInstrument::onRunTriggered() {
+    RunSeqDialog dialog(m_taskListPtr, (*m_seqListPtr)[m_curSeqID]);
+    dialog.start();
+    int result = dialog.exec();
+}
+
+void OpenInstrument::addNewCurve(const pair<vector<double>, vector<double>>& data,
+    const QString& legendStr, const QColor& col, int penWidth, Qt::PenStyle style) {
+    shared_ptr<QLineSeries> curve = make_shared<QLineSeries>();
+    for (int i = 0; i < data.first.size(); i++) {
+        curve->append(data.first[i], data.second[i]);
     }
 
-    chart->addSeries(m_rawlinePtr.get());
-    m_rawlinePtr->attachAxis(axisX);
-    m_rawlinePtr->attachAxis(axisY);
-    chart->setTitle("Sample xxxxx");
-
+    QPen pen;
+    pen.setWidth(penWidth);
+    pen.setColor(col);
+    pen.setStyle(style);
+    curve->setPen(pen);
+    m_curvePtrs.push_back(curve);
+    chart->addSeries(curve.get());
+    axisY->setRange(-0.4, 10.6);
+    curve->attachAxis(axisX);
+    curve->attachAxis(axisY);
+    curve->setName(legendStr);
 }

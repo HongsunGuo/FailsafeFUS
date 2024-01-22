@@ -52,6 +52,12 @@
     <ClCompile Include="FileMgr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RunSeqDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataProc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Task.h">
@@ -60,12 +66,18 @@
     <ClInclude Include="FileMgr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DataProc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="TaskEditor.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="SequenceEditor.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="RunSeqDialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -80,6 +92,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="AddTaskToSequenceDialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="RunSeqDialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

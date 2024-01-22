@@ -38,13 +38,20 @@ private:
     std::shared_ptr<QLineSeries> m_rawlinePtr;
     std::shared_ptr<QLineSeries> m_processedlinePtr;
     std::vector<std::shared_ptr<QLineSeries>> m_peaksLines;
-    std::vector<std::pair<double, double>> m_curData;
+    std::vector<std::shared_ptr<QLineSeries>> m_curvePtrs;
+    //std::vector<std::pair<double, double>> m_curData;
+
+    std::pair<std::vector<double>, std::vector<double>> m_curData;
+
     void configureToolbar();
     void configureLines();
-
+    void addNewCurve(const std::pair<std::vector<double>, std::vector<double>>& data,
+        const QString& legendStr, const QColor& col, int penWidth = 1, Qt::PenStyle = Qt::SolidLine);
+ 
 private slots:
     void onTaskEditTriggered();
     void onSequenceEditTriggered();
     void onAnalyzeDataTriggered();
     void onSaveTriggered();
+    void onRunTriggered();
 };

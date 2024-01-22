@@ -89,7 +89,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DataProc.cpp" />
     <ClCompile Include="FileMgr.cpp" />
+    <ClCompile Include="RunSeqDialog.cpp" />
     <ClCompile Include="SequenceEditor.cpp" />
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="TaskEditor.cpp" />
@@ -100,12 +102,15 @@
     <QtMoc Include="OpenInstrument.h" />
     <ClCompile Include="OpenInstrument.cpp" />
     <ClCompile Include="main.cpp" />
+    <QtUic Include="RunSeqDialog.ui" />
     <QtUic Include="SequenceEditor.ui" />
     <QtUic Include="TaskEditor.ui" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DataProc.h" />
     <ClInclude Include="FileMgr.h" />
     <QtMoc Include="SequenceEditor.h" />
+    <QtMoc Include="RunSeqDialog.h" />
     <ClInclude Include="Task.h" />
     <QtMoc Include="TaskEditor.h" />
   </ItemGroup>

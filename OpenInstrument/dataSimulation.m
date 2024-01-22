@@ -44,60 +44,88 @@ b = fir1(N, Fc, windowType);
 % y_denoise = filtfilt(b, 1, y_monotonic_baseline);
 
 y_denoise = movmean(y_monotonic_baseline, 20);
-
-
-yy = y_denoise;
-x_tang = [];
-nStep = 5;
-for k=2:length(yy)
-    slope = yy(k) - yy(k-1);
-    lo = k - nStep;
-    if lo < 1
+%find peaks
+nHalfWin = 30;
+peakXind = [];
+for k=1 + nHalfWin:length(y_denoise) - nHalfWin
+    lo = k - nHalfWin;
+    if lo <= 1
         lo = 1;
     end
-    
-    up = k+ nStep;
-    if up > length(yy)
-        up = length(yy);
+    up = k + nHalfWin;
+    if(k>= length(y_denoise))
+        up = length(y_denoise);
     end
-    
-    isT = 1;
+    found = true;
     while(lo < up)
-        if(yy(lo) < slope * (lo - k) + yy(k) )
-            isT = 0;
+        if y_denoise(lo) > y_denoise(k)
+            found = false;
             break;
         end
         lo = lo + 1;
     end
-    if isT == 1
-        x_tang = [x_tang; k];
-        hold on;
+    if found
         xline(k./10);
+        peakXind = [peakXind; k];
     end
-    
 end
 
 
 
+% yy = y_denoise;
+% x_tang = [];
+% nStep = 5;
+% for k=2:length(yy)
+%     slope = yy(k) - yy(k-1);
+%     lo = k - nStep;
+%     if lo < 1
+%         lo = 1;
+%     end
+%     
+%     up = k+ nStep;
+%     if up > length(yy)
+%         up = length(yy);
+%     end
+%     
+%     isT = 1;
+%     while(lo < up)
+%         if(yy(lo) < slope * (lo - k) + yy(k) )
+%             isT = 0;
+%             break;
+%         end
+%         lo = lo + 1;
+%     end
+%     if isT == 1
+%         x_tang = [x_tang; k];
+%         hold on;
+%         xline(k./10);
+%     end
+%     
+% end
+% hold on;
+yline(0);
 
 
-
-splineFit = spline(x, y_denoise);
-y_fittedCurve = ppval(splineFit, x);
+% splineFit = spline(x, y_denoise);
+% y_fittedCurve = ppval(splineFit, x);
 
 % Evaluate spline
 hold on;
-plot(x, y_fittedCurve, 'r', 'linewidth', 2);
-% plot(x, y_denoise, 'r', 'linewidth', 2);
+% plot(x, y_fittedCurve, 'r', 'linewidth', 2);
+plot(x, y_denoise, 'r', 'linewidth', 2);
 
 %y_corrected = detrend(y_denoise);
 
-nStep = 5;
-y_denoise = y_fittedCurve;
+nStep = 1;
+% y_denoise = y_fittedCurve;
 yyy = y_denoise(nStep + 1:end) - y_denoise(1:end-nStep);
 % plot(x(2:end), 5.*(y_denoise) - 1), 'b', 'linewidth', 2);
 % yyy = movmean(yyy, 10);
- plot(x(nStep + 1:end), 10* yyy, 'k', 'linewidth', 1);
+x1 = x(nStep + 1:end);
+% yyy = downsample(yyy, 3);
+% xxx = downsample(x1, 3);
+yyy = movmean(yyy, 10);
+plot(x1, 20* yyy, 'k', 'linewidth', 1);
 
 
 % % Step 1: Identify tangent points
