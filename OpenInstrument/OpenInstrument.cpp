@@ -21,21 +21,25 @@ OpenInstrument::OpenInstrument(QWidget* parent)
     ui.setupUi(this);
 
     chart = new QChart();
-    chart->setTitle("Sample Chart");
+    //chart->setTitle("Sample Chart");
     axisX = new QValueAxis();
     axisY = new QValueAxis();
 
     axisX->setGridLineVisible(true);
+    axisX->setTickCount(10);
     axisY->setGridLineVisible(true);
+    axisY->setTickCount(10);
     QPen gridPen;
-    gridPen.setColor(Qt::white);
+    //gridPen.setColor(Qt::white);
+    gridPen.setColor(Qt::gray);
+    gridPen.setWidth(0.5);
     gridPen.setStyle(Qt::DashLine);
     axisX->setGridLinePen(gridPen);
     axisY->setGridLinePen(gridPen);
     chart->addAxis(axisX, Qt::AlignBottom);
     chart->addAxis(axisY, Qt::AlignLeft);
 
-    chart->setTheme(QChart::ChartThemeDark);
+    chart->setTheme(QChart::ChartThemeLight);
     chart->legend()->setVisible(true);
     chart->legend()->setAlignment(Qt::AlignBottom);
     chart->legend()->setBackgroundVisible(false);
@@ -101,17 +105,39 @@ void OpenInstrument::onSaveTriggered() {
 void OpenInstrument::onAnalyzeDataTriggered() {
     if (!FileMgr::readDataFile("./xy_data.txt", m_curData))
         return;
-    addNewCurve(m_curData, "Raw data", Qt::white);
+    addNewCurve(m_curData, "Raw", Qt::black);
     pair<vector<double>, vector<double>> filterData = DataProc::movemean(m_curData, 20);
-    addNewCurve(filterData, "FIltered data", QColor(255, 100, 100), 3);
-
-    vector<int> peakInds = DataProc::findMaxPeaks(filterData.second, 60);
+    addNewCurve(filterData, "FIltered", QColor(255, 50, 50), 2);
+    /*
+    vector<int> peakInds = DataProc::findMaxPeaks(filterData.second, 70);
     for (int i = 0; i < peakInds.size(); i++) {
         vector<double> xx = { filterData.first[peakInds[i]], filterData.first[peakInds[i]] };
         vector<double> yy = { -0.4, 10.6 };
         addNewCurve(make_pair(xx, yy),
             "Peak " + QString::number(i + 1), QColor(255, 50, 50), 2, Qt::DashDotLine);
     }
+
+        vector<vector<int>> ranges =
+            DataProc::findRangesOfPeaks(filterData.second, peakInds);
+        for (auto& curRange : ranges) {
+            for (auto& ind : curRange) {
+                vector<double> xx = { filterData.first[ind], filterData.first[ind] };
+                vector<double> yy = { -0.4, 10.6 };
+                addNewCurve(make_pair(xx, yy),
+                    "", QColor(255, 10, 10), 2, Qt::DashDotLine);
+            }
+        }
+     */
+    vector<double> cleanData;
+    DataProc::removeBaseline(m_curData.second, cleanData);
+    vector<double> intersectionLine(cleanData.size(), 0);
+    for (int i = 0; i < intersectionLine.size(); i++) {
+        intersectionLine[i] = filterData.second[i] - cleanData[i];
+    }
+    addNewCurve(make_pair(m_curData.first, intersectionLine),
+        "Real baseline", QColor(128, 0, 128), 2, Qt::DashLine);
+    addNewCurve(make_pair(m_curData.first, cleanData),
+        "Baseline removed", QColor(50, 50, 250), 2, Qt::SolidLine);
 }
 
 void OpenInstrument::onRunTriggered() {
@@ -134,8 +160,9 @@ void OpenInstrument::addNewCurve(const pair<vector<double>, vector<double>>& dat
     curve->setPen(pen);
     m_curvePtrs.push_back(curve);
     chart->addSeries(curve.get());
-    axisY->setRange(-0.4, 10.6);
+    axisY->setRange(0, 11);
     curve->attachAxis(axisX);
     curve->attachAxis(axisY);
-    curve->setName(legendStr);
+    if(!legendStr.isEmpty())
+        curve->setName(legendStr);
 }

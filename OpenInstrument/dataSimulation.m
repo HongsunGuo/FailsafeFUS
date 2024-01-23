@@ -126,8 +126,10 @@ x1 = x(nStep + 1:end);
 % xxx = downsample(x1, 3);
 yyy = movmean(yyy, 10);
 plot(x1, 20* yyy, 'k', 'linewidth', 1);
-
-
+hold on;
+yline(0.5);
+hold on;
+yline(-0.5);
 % % Step 1: Identify tangent points
 % signal = y_denoise;
 % [~, minLocations] = findpeaks(-signal);
