@@ -121,6 +121,10 @@
    </property>
   </action>
   <action name="actionAnalyze_Data">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/analyze.png</normaloff>icons/analyze.png</iconset>
+   </property>
    <property name="text">
     <string>Analyze Data</string>
    </property>

@@ -18,9 +18,7 @@ public:
 		const std::string &fileName);
 	static bool readTasksFromFile(std::vector<Task>& taskList,
 		const std::string& fileName);
-	static bool saveSeqListToFile(const std::vector<SequenceListItem>& seqList,
-		const std::string& fileName);
-	static bool readSeqListFromFile(std::vector<SequenceListItem>& seqList,
-		const std::string& fileName);
+	static bool saveSeqListToFile(const std::vector<SequenceListItem>& seqList);
+	static bool readSeqListFromFile(std::vector<SequenceListItem>& seqList);
 };
 

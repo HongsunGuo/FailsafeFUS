@@ -126,6 +126,7 @@ void SequenceEditor::onDeleteSeqButtonClicked() {
 	}
 
 	(*m_seqListPtr)[m_curEditSeqID].sequenceList.erase((*m_seqListPtr)[m_curEditSeqID].sequenceList.begin() + index);
+	updateCurSeqEditListWidget();
 }
 
 void SequenceEditor::onMoveupButtonClicked() {

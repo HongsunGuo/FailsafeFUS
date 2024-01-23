@@ -3,6 +3,9 @@
 #include <memory>
 #include <vector>
 #include <iostream>
+#include <sstream>
+
+const char delimiter = '\v'; //'v' is least likely to be used in string.
 
 class Task
 {
@@ -14,14 +17,19 @@ public:
 	std::string serialPortName;
 	std::string description;
 	std::string command;
+
 	friend std::ostream& operator<<(std::ostream& os, const Task& t) {
-		os << t.shortName << " " << t.serialPortName << " "
-			<< t.description << " " << t.command << "\n";
+		os << t.shortName << delimiter << t.serialPortName << delimiter
+			<< t.description << delimiter << t.command << delimiter;
 		return os;
 	}
 
 	friend std::istream& operator>>(std::istream& is, Task& t) {
-		is >> t.shortName >> t.serialPortName >> t.description >> t.command;
+		std::getline(is, t.shortName, delimiter);
+		std::getline(is, t.serialPortName, delimiter);
+		std::getline(is, t.description, delimiter);
+		std::getline(is, t.command, delimiter);
+		//is >> t.shortName >> delimiter >> t.serialPortName >> t.description >> t.command;
 		return is;
 	}
 };
@@ -34,12 +42,16 @@ public:
 	std::string taskShortName = "";
 	int delaySec = 0;
 	friend std::ostream& operator<<(std::ostream& os, const SequenceItem& sI) {
-		os << sI.taskShortName << " " << sI.delaySec << "\n";
+		os << sI.taskShortName << delimiter << sI.delaySec << delimiter;
 		return os;
 	}
 
 	friend std::istream& operator>>(std::istream& is, SequenceItem& sI) {
-		is >> sI.taskShortName >> sI.delaySec;
+		std::string line;
+		std::getline(is, line);
+		std::istringstream iss(line);
+		std::getline(iss, sI.taskShortName, delimiter);
+		iss >> sI.delaySec;
 		return is;
 	}
 };
@@ -51,21 +63,26 @@ public:
 	std::string shortName; //unique
 	//
 	friend std::ostream& operator<<(std::ostream& os, const SequenceListItem& slist) {
-		os << slist.shortName << " " << slist.sequenceList.size() << " ";
 		for (const auto& s : slist.sequenceList) {
-			os << s << " ";
+			os << s << std::endl;
 		}
-		os << "\n";
 		return os;
 	}
 
 	friend std::istream& operator>>(std::istream& is, SequenceListItem& slist) {
-		size_t size;
-		is >> slist.shortName >> size;
-		slist.sequenceList.clear();
+		
+		std::string line;
+		/*
+		std::getline(is, line);
+		slist.shortName = line;
+		*/
 		SequenceItem sI;
-		for (size_t i = 0; i < size; ++i) {
-			is >> sI;
+		while (std::getline(is, line)) {
+			if (line.empty())
+				continue;
+			std::istringstream iss(line);
+			//getline(iss, sI.taskShortName, delimiter);
+			iss >> sI;
 			slist.sequenceList.push_back(sI);
 		}
 		return is;

@@ -16,7 +16,7 @@ OpenInstrument::OpenInstrument(QWidget* parent)
     m_seqListPtr = make_shared<vector<SequenceListItem>>();
     //load from ini file
     FileMgr::readTasksFromFile(*m_taskListPtr, m_taskFileName);
-    FileMgr::readSeqListFromFile(*m_seqListPtr, m_seqFileName);
+    FileMgr::readSeqListFromFile(*m_seqListPtr);
     //
     ui.setupUi(this);
 
@@ -96,7 +96,7 @@ void OpenInstrument::onSaveTriggered() {
         return;
     }
 
-    if (!FileMgr::saveSeqListToFile(*m_seqListPtr, m_seqFileName)) {
+    if (!FileMgr::saveSeqListToFile(*m_seqListPtr)) {
         QMessageBox::warning(nullptr, "No save", "Could not save to file seq.ini");
         return;
     }
