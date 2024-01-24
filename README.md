@@ -1,7 +1,30 @@
 # Table of Contents
+- [OpenInstrument](#OpenInstrument)
+  - [Features](#Features)
+  - [Screenshots](#Screenshots)
 - [StimuliScheduler](#StimuliScheduler)
   - [Features](#Features)
 - [FailSafe](#FailSafe)
+
+
+
+# OpenInstrument
+## Features
+
+## Screenshots
+<img src='OpenInstrument/images/Add task.png' width='700'>
+
+
+<img src='OpenInstrument/images/Add seq.png' width='700'>
+
+
+<img src='OpenInstrument/images/Run.png' width='700'>
+
+
+<img src='OpenInstrument/images/Done.png' width='700'>
+
+
+<img src='OpenInstrument/images/Analysis.png' width='700'>
 
 
 # StimuliScheduler
